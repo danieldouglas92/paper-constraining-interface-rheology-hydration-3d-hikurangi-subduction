@@ -1,0 +1,87 @@
+# 1: Time step number
+# 2: Time (years)
+# 3: Time step size (years)
+# 4: Number of mesh cells
+# 5: Number of Stokes degrees of freedom
+# 6: Number of temperature degrees of freedom
+# 7: Number of degrees of freedom for all compositions
+# 8: Number of nonlinear iterations
+# 9: Iterations for temperature solver
+# 10: Iterations for composition solver 1
+# 11: Iterations for composition solver 2
+# 12: Iterations for composition solver 3
+# 13: Iterations for composition solver 4
+# 14: Iterations for composition solver 5
+# 15: Iterations for composition solver 6
+# 16: Iterations for composition solver 7
+# 17: Iterations for composition solver 8
+# 18: Iterations for composition solver 9
+# 19: Iterations for composition solver 10
+# 20: Iterations for composition solver 11
+# 21: Iterations for composition solver 12
+# 22: Iterations for composition solver 13
+# 23: Iterations for composition solver 14
+# 24: Iterations for composition solver 15
+# 25: Iterations for Stokes solver
+# 26: Velocity iterations in Stokes preconditioner
+# 27: Schur complement iterations in Stokes preconditioner
+# 28: Visualization file name
+# 29: Pressure at top (Pa)
+# 30: Pressure at bottom (Pa)
+# 31: Minimal pressure (Pa)
+# 32: Average pressure (Pa)
+# 33: Maximal pressure (Pa)
+# 34: RMS velocity (m/year)
+# 35: Max. velocity (m/year)
+# 36: Minimal temperature (K)
+# 37: Average temperature (K)
+# 38: Maximal temperature (K)
+# 39: Average nondimensional temperature (K)
+# 40: Minimal value for composition Upper_Mantle
+# 41: Maximal value for composition Upper_Mantle
+# 42: Global mass for composition Upper_Mantle
+# 43: Minimal value for composition Lower_Mantle
+# 44: Maximal value for composition Lower_Mantle
+# 45: Global mass for composition Lower_Mantle
+# 46: Minimal value for composition Base_Continent
+# 47: Maximal value for composition Base_Continent
+# 48: Global mass for composition Base_Continent
+# 49: Minimal value for composition East_Prov_PAC
+# 50: Maximal value for composition East_Prov_PAC
+# 51: Global mass for composition East_Prov_PAC
+# 52: Minimal value for composition East_Prov_AUS
+# 53: Maximal value for composition East_Prov_AUS
+# 54: Global mass for composition East_Prov_AUS
+# 55: Minimal value for composition Batholith_PAC
+# 56: Maximal value for composition Batholith_PAC
+# 57: Global mass for composition Batholith_PAC
+# 58: Minimal value for composition Batholith_AUS
+# 59: Maximal value for composition Batholith_AUS
+# 60: Global mass for composition Batholith_AUS
+# 61: Minimal value for composition TVZ
+# 62: Maximal value for composition TVZ
+# 63: Global mass for composition TVZ
+# 64: Minimal value for composition West_Prov_PAC
+# 65: Maximal value for composition West_Prov_PAC
+# 66: Global mass for composition West_Prov_PAC
+# 67: Minimal value for composition West_Prov_AUS
+# 68: Maximal value for composition West_Prov_AUS
+# 69: Global mass for composition West_Prov_AUS
+# 70: Minimal value for composition Base_Subducting
+# 71: Maximal value for composition Base_Subducting
+# 72: Global mass for composition Base_Subducting
+# 73: Minimal value for composition Crust
+# 74: Maximal value for composition Crust
+# 75: Global mass for composition Crust
+# 76: Minimal value for composition plastic_strain
+# 77: Maximal value for composition plastic_strain
+# 78: Global mass for composition plastic_strain
+# 79: Minimal value for composition weak_seed
+# 80: Maximal value for composition weak_seed
+# 81: Global mass for composition weak_seed
+# 82: Minimal value for composition water
+# 83: Maximal value for composition water
+# 84: Global mass for composition water
+# 85: Number of advected particles
+# 86: Particle file name
+0 0.000000000000e+00 0.000000000000e+00 2265989 61387306 19615910 294238650 96 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5018 5210 74622 /home/900358141/storage/shared/plate_model/dry/final_suite/5e20_10kmweak_dry/solution/solution-00000 -6.68576182e-09 5.42911361e+10 -6.37069147e+08 2.37812694e+10 5.43066843e+10 4.61586671e-01 3.11589810e+00 1.41183735e+02 1.91000459e+03 2.50000000e+03 8.04009479e-01 -2.81250000e-01 1.28125000e+00 9.07628909e+18 -2.65625000e-01 1.26562500e+00 1.26574568e+19 -2.81250000e-01 1.28125000e+00 8.18090705e+17 -2.34375000e-01 1.26562500e+00 7.41036977e+16 -2.18750000e-01 1.21875000e+00 3.54881290e+16 -2.18750000e-01 1.26562500e+00 4.82743486e+16 -2.65625000e-01 1.26562500e+00 4.86440893e+15 -2.18750000e-01 1.26562500e+00 1.40029798e+15 0.00000000e+00 1.00000000e+00 2.77027951e+16 -2.65625000e-01 1.26562500e+00 8.70319794e+16 -2.65625000e-01 1.28125000e+00 1.17922010e+18 -2.65625000e-01 1.26562500e+00 1.00503146e+17 -2.18750000e-01 1.26562500e+00 6.64456572e+15 0.00000000e+00 1.00000000e+00 1.26345669e+16 0.00000000e+00 0.00000000e+00 0.00000000e+00 2265989 /home/900358141/storage/shared/plate_model/dry/final_suite/5e20_10kmweak_dry/particles/particles-00000 
