@@ -1,0 +1,39 @@
+{
+  "version":"0.4",
+  "interpolation":"continuous monotone spline",
+  "features":
+  [
+    {"model":"subducting plate", "name":"Hikurangi Profile 90", "coordinates":[[455000, 480000], [990000, 1100000], [1700000, 2950000]], "dip point":[2000e3, -2000e3],
+    "segments":[
+    {"length":10e3, "thickness":[100000.0], "angle":[0, 30]},
+    {"length":10e3, "thickness":[100000.0], "angle":[30, 45]},
+    {"length":10e3, "thickness":[100000.0], "angle":[30, 45]}],
+    "temperature models":[{"model":"plate model", "density":3300, "plate velocity":0.01, "adiabatic heating":false}],
+    "composition models":[{"model":"uniform", "compositions":[0], "max distance slab top":1000000.0, "min distance slab top":0}],
+    
+    "sections":[
+    {"coordinate":0,
+    "segments":[
+    {"length":100e3, "thickness":[100000.0], "angle":[0, 30]},
+    {"length":1, "thickness":[100000.0], "angle":[30, 45]},
+    {"length":100e3, "thickness":[100000.0], "angle":[30, 45]}],
+    "temperature models":[{"model":"plate model", "density":3300, "plate velocity":0.01, "adiabatic heating":false}],
+    "composition models":[{"model":"uniform", "compositions":[0], "max distance slab top":1000000.0, "min distance slab top":0}]},
+    {"coordinate":1,
+    "segments":[
+    {"length":200e3, "thickness":[100000.0], "angle":[0, 30]},
+    {"length":1, "thickness":[100000.0], "angle":[30, 45]},
+    {"length":200e3, "thickness":[100000.0], "angle":[30, 45]}],
+    "temperature models":[{"model":"plate model", "density":3300, "plate velocity":0.01, "adiabatic heating":false}],
+    "composition models":[{"model":"uniform", "compositions":[0], "max distance slab top":1000000.0, "min distance slab top":0}]},
+    {"coordinate":2,
+    "segments":[
+    {"length":300e3, "thickness":[100000.0], "angle":[0, 30]},
+    {"length":1, "thickness":[100000.0], "angle":[30, 45]},
+    {"length":300e3, "thickness":[100000.0], "angle":[30, 45]}],
+    "temperature models":[{"model":"plate model", "density":3300, "plate velocity":0.01, "adiabatic heating":false}],
+    "composition models":[{"model":"uniform", "compositions":[0], "max distance slab top":1000000.0, "min distance slab top":0}]}
+    ]
+    }
+  ]
+}

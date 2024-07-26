@@ -1,0 +1,14 @@
+{
+  "version":"0.4",
+  "cross section":[[0, 0], [100, 0]],
+  "features":
+  [
+    {"model":"subducting plate", "name":"Hikurangi Profile", "coordinates":[[-1000.0, -1000.0], [1150000.0, -1000.0], [1150000.0, 1000.0], [-1000.0, 1000.0]], "dip point":[2000000.0, 0],
+    "segments":[{"length":[20.0274766  20.02718801 20.02689866 20.02660716 20.02631529 20.02602352
+ 20.02573056 20.02543583 20.02514127 20.02484612 20.02454885 20.02425248
+ 20.02395476 20.02365633 20.0233566  20.02305673 20.02275628  0.        ], "thickness":[95000.0], "angle":[4.410885673387716]}],
+    "temperature models":[{"model":"plate model", "density":3300, "plate velocity":0.01, "adiabatic heating":false}],
+    "composition models":[{"model":"uniform", "compositions":[0], "max distance slab top":10000.0, "min distance slab top":0}]},
+
+  ]
+}

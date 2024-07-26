@@ -1,0 +1,118 @@
+{
+  "version":"0.5",
+  "cross section":[[0, 250500.0], [100, 250500.0]], 
+  "interpolation":"continuous monotone spline",
+  "features":
+  [
+
+{
+"model":"mantle layer", "name":"Upper Mantle", "min depth":125000.0, "max depth":660000.0, "coordinates":[[0.0, -1000.0], [0.0, 501000.0], [4000000.0, 501000.0], [4000000.0, -1000.0]],
+"composition models":[{"model":"uniform", "compositions":[0], "max depth":660000.0, "min depth":125000.0}]
+},
+
+{
+"model":"mantle layer", "name":"Lower Mantle", "min depth":660000.0, "max depth":2891000.0, "coordinates":[[0.0, -1000.0], [0.0, 501000.0], [4000000.0, 501000.0], [4000000.0, -1000.0]],
+"composition models":[{"model":"uniform", "compositions":[1], "max depth":2891000.0, "min depth":660000.0}]
+},
+
+{"model":"continental plate", "name":"continental plate", "coordinates":[[0.0, -1000.0], [3000000.0, -1000.0], [3000000.0, 501000.0], [0.0, 501000.0]], "min depth":0, "max depth":125000,
+
+"temperature models":[{"model":"linear", "min depth":0, "max depth":125000,
+"top temperature":300, "bottom temperature":-1}], 
+"composition models":[{"model":"uniform", "compositions":[4], "min depth":0, "max depth":125000}]
+},
+
+{
+"model":"oceanic plate", "name":"oceanic plate", "min depth":0.0, "max depth":125000.0, "coordinates":[[4000000.0, -1000.0], [3000000.0, -1000.0], [3000000.0, 501000.0], [4000000.0, 501000.0]],
+"temperature models":[{"model":"half space model", "max depth":125000.0, "min depth":0.0, "top temperature":300, "bottom temperature":-1, "spreading velocity":0.05, "ridge coordinates":[[[5001000.0, 0.0], [5001000.0, 500000.0]]]}], 
+"composition models":[{"model":"uniform", "compositions":[3], "max depth":125000.0, "min depth":0}]
+},
+
+    {"model":"subducting plate", "name":"Kermadec Slab", "min depth":0, "max depth":10000000.0, "coordinates":[[3000000.0, -1000.0], [3000000.0, 501000.0]], "dip point":[-200000000000.0, 2000000.0],
+"segments":[
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]}],
+
+    "sections":[    {"coordinate":0,
+     "segments":[    {"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[0, 30], "top truncation":[-125000]},
+    {"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[30, 45], "top truncation":[-125000]},
+    {"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[45, 45], "top truncation":[-125000]},
+    {"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[45, 30], "top truncation":[-125000]}]},
+    {"coordinate":1,
+     "segments":[    {"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[0, 30], "top truncation":[-125000]},
+    {"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[30, 45], "top truncation":[-125000]},
+    {"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[45, 45], "top truncation":[-125000]},
+    {"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[45, 30], "top truncation":[-125000]}]}
+    ],
+"temperature models":[{"model":"mass conserving", "density":3300, "plate velocity":0.05, "coupling depth":125000.0, "shallow dip":20, "ridge coordinates":[[[5001000.0, 0.0], [5001000.0, 501000.0]]], "taper distance":0, "max distance slab top":375000.0, "min distance slab top":-250000.0, "thermal conductivity":3.3, "adiabatic heating":true, "taper distance":500000}], 
+
+"composition models":[{"model":"uniform", "compositions":[3], "max distance slab top":125000.0, "min distance slab top":0}]
+},
+
+{
+"model":"oceanic plate", "name":"oceanic crust", "min depth":0.0, "max depth":10000.0, "coordinates":[[4000000.0, -1000.0], [3000000.0, -1000.0], [3000000.0, 501000.0], [4000000.0, 501000.0]],
+"temperature models":[{"model":"half space model", "max depth":10000.0, "min depth":0.0, "top temperature":300, "bottom temperature":-1, "spreading velocity":0.05, "ridge coordinates":[[[5001000.0, 0.0], [5001000.0, 500000.0]]]}], 
+"composition models":[{"model":"uniform", "compositions":[2], "max depth":10000.0, "min depth":0}]
+},
+
+    {"model":"subducting plate", "name":"Kermadec Crust", "min depth":0, "max depth":130000.0, "coordinates":[[3000000.0, -1000.0], [3000000.0, 501000.0]], "dip point":[-200000000000.0, 2000000.0],
+"segments":[
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]}],
+
+    "sections":[    {"coordinate":0,
+     "segments":[    {"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[0, 30], "top truncation":[-125000]},
+    {"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[30, 45], "top truncation":[-125000]},
+    {"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[45, 45], "top truncation":[-125000]},
+    {"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[45, 30], "top truncation":[-125000]}]},
+    {"coordinate":1,
+     "segments":[    {"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":0, "thickness":[1.0], "angle":[0]},
+{"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[0, 30], "top truncation":[-125000]},
+    {"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[30, 45], "top truncation":[-125000]},
+    {"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[45, 45], "top truncation":[-125000]},
+    {"length":300000.0, "thickness":[125000.0, 125000.0], "angle":[45, 30], "top truncation":[-125000]}]}
+    ],
+    
+"composition models":[{"model":"uniform", "compositions":[2], "max distance slab top":10000.0, "min distance slab top":0}]
+}
+]
+}

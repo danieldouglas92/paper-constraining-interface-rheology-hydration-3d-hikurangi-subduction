@@ -1,0 +1,29 @@
+{
+  "version":"0.5",
+  "coordinate system":{"model":"cartesian"},
+  "features":
+  [
+
+{
+"model":"mantle layer", "name":"Upper Mantle", "min depth":0.0, "max depth":660000.0, "coordinates":[[0,1000e3],[1000e3,1000e3],[1000e3,0],[0,0]],
+"temperature models":[{"model":"linear", "max depth":660000.0, "min depth":0.0, "top temperature":300, "bottom temperature":1820}], 
+"composition models":[{"model":"uniform", "compositions":[0], "max depth":660000.0, "min depth":0.0}]
+},
+
+{
+"model":"mantle layer", "name":"Lower Mantle", "min depth":660000.0, "max depth":2891000.0, "coordinates":[[0,1000e3],[1000e3,1000e3],[1000e3,0],[0,0]],
+"temperature models":[{"model":"linear", "max depth":2891000.0, "min depth":660000.0, "top temperature":1820, "bottom temperature":3000}], 
+"composition models":[{"model":"uniform", "compositions":[1], "max depth":2891000.0, "min depth":660000.0}]
+},
+
+{
+"model":"continental plate", "name":"continental plate", "coordinates":[[-1,1000e3],[1000e3,1000e3],[1000e3,-1],[-1,-1]], "min depth":[[0],[50e3,[[-1,-1], [1000e3,1000e3]]]], "max depth":[[300e3],[125e3,[[-1,-1], [1000e3,1000e3]]]],
+"temperature models":[
+    {"model":"linear", "min depth":[[0],[50e3,[[-1,-1], [1000e3,1000e3]]]], "max depth":[[300e3],[125e3,[[-1,-1], [1000e3,1000e3]]]], "top temperature":300, "bottom temperature":1600}
+    ], 
+"composition models":[
+    {"model":"uniform", "compositions":[2], "min depth":[[0],[50e3,[[-1,-1], [1000e3,1000e3]]]], "max depth":[[300e3],[125e3,[[-1,-1], [1000e3,1000e3]]]]}
+    ]
+}
+]
+}

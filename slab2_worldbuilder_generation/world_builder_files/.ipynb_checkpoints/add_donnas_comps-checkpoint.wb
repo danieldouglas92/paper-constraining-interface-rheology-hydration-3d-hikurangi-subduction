@@ -1,0 +1,50 @@
+{
+  "version":"0.5",
+  "interpolation":"continuous monotone spline",
+  "features":
+  [
+
+{
+"model":"mantle layer", "name":"Upper Mantle", "min depth":125000.0, "max depth":660000.0, "coordinates":[[0.0, 0.0], [0.0, 5000000.0], [4000000.0, 5000000.0], [4000000.0, 0.0]],
+"temperature models":[{"model":"linear", "max depth":660000.0, "min depth":125000.0, "top temperature":1600, "bottom temperature":1820}], 
+"composition models":[{"model":"uniform", "compositions":[0], "max depth":660000.0, "min depth":125000.0}]
+},
+
+{
+"model":"mantle layer", "name":"Lower Mantle", "min depth":660000.0, "max depth":2891000.0, "coordinates":[[0.0, 0.0], [0.0, 5000000.0], [4000000.0, 5000000.0], [4000000.0, 0.0]],
+"temperature models":[{"model":"linear", "max depth":2891000.0, "min depth":660000.0, "top temperature":1820, "bottom temperature":3000}], 
+"composition models":[{"model":"uniform", "compositions":[1], "max depth":2891000.0, "min depth":660000.0}]
+},
+
+{
+"model":"continental plate", "name":"continental plate", "min depth":0, "max depth":125000.0, "coordinates":[[0.0, 0.0], [0.0, 5000000.0], [4000000.0, 5000000.0], [4000000.0, 0.0]],
+"temperature models":[{"model":"linear", "max depth":125000.0, "min depth":0.0, "top temperature":300, "bottom temperature":1600}], 
+"composition models":[{"model":"uniform", "compositions":[2], "max depth":125000.0, "min depth":0}]
+},
+
+{
+"model":"continental plate", "name":"One Hundred Thick plate", "min depth":0, "max depth":100000.0, "coordinates":[[ -298936.961443 -2046969.81297 ]
+ [ -330618.075269 -2123132.41958 ]
+ [ -425586.556052 -2241530.75169 ]
+ [ -405051.570357 -2297949.49491 ]
+ [ -420721.185943 -2320426.24882 ]
+ [ -768906.563331 -2599501.0242  ]
+ [ -826485.272703 -2615365.89963 ]
+ [ -833098.103562 -2641772.8654  ]
+ [-1025007.58478  -2710646.61444 ]
+ [-1030413.38196  -2631670.31483 ]
+ [-1090884.15826  -2620036.71455 ]
+ [-1112322.14127  -2537781.9612  ]
+ [-1090155.35917  -2529842.87963 ]
+ [-1097693.21727  -2413485.079   ]
+ [-1062647.26676  -2188482.75541 ]
+ [-1074068.95925  -2155627.82302 ]
+ [-1060623.96277  -2070451.99754 ]
+ [ -298936.961443 -2046969.81297 ]],
+"temperature models":[{"model":"linear", "max depth":100000.0, "min depth":0.0, "top temperature":300, "bottom temperature":1600}], 
+"composition models":[{"model":"uniform", "compositions":[3], "max depth":100000.0, "min depth":0}]
+},
+
+}
+]
+}

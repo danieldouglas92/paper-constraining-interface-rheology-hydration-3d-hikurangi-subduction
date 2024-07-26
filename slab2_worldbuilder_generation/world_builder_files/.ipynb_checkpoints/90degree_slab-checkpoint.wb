@@ -1,0 +1,43 @@
+{
+  "version":"0.5",
+  "cross section":[[0, 50000.0], [100, 50000.0]],
+  "interpolation":"continuous monotone spline",
+  "features":
+  [
+  
+  {"model":"oceanic plate", "name":"oceanic plate", "min depth":0, "max depth":10000000000.0, "coordinates":[[0.0, 0.0], [0.0, 100000.0], [1500000.0, 100000.0], [1500000.0, 0.0]],
+  
+"temperature models":[{"model":"plate model", "max depth":125000.0, "min depth":0, "top temperature":300, "bottom temperature":1600, "spreading velocity":0.005, "ridge coordinates":[[[0.0, 0.0], [0.0, 100000.0]]]}],
+"composition models":[{"model":"uniform", "compositions":[0], "max depth":125000.0, "min depth":0.0}]}, 
+
+    {"model":"continental plate", "name":"continental plate", "min depth":0, "max depth":125000.0, "coordinates":[[1520000.0, 0.0], [3000000.0, 0.0], [3000000.0, 100000.0], [1520000.0, 100000.0]],
+        "temperature models":[{"model":"linear", "max depth":125000.0, "min depth":0, "top temperature":300, "bottom temperature":1600}],
+    "composition models":[{"model":"uniform", "compositions":[1], "max depth":125000.0, "min depth":0}]}, 
+
+    {"model":"mantle layer", "name":"mantle", "min depth":125000.0, "max depth":1000000000.0, "coordinates":[[0.0, 0.0], [3000000.0, 0.0], [3000000.0, 100000.0], [0.0, 100000.0]],
+        "temperature models":[{"model":"linear", "max depth":1000000000.0, "min depth":125000.0, "top temperature":1600, "bottom temperature":1820}],
+    "composition models":[{"model":"uniform", "compositions":[2], "max depth":1000000000.0, "min depth":125000.0}]},
+
+    {"model":"subducting plate", "name":"Hikurangi Slab", "coordinates":[[1500000.0, 0], [1500000.0, 100000.0]], "dip point":[200000000000.0, 50000.0],
+"segments":[
+{"length":1, "thickness":[1.0], "angle":[0]},
+{"length":1, "thickness":[1.0], "angle":[0]},
+{"length":1, "thickness":[1.0], "angle":[0]},
+{"length":1, "thickness":[1.0], "angle":[0]}],
+
+    "sections":[    {"coordinate":0,
+     "segments":[    {"length":300000.0, "thickness":[125000.0], "angle":[0, 60]},
+                     {"length":200000.0, "thickness":[125000.0], "angle":[60, 90]},
+                     {"length":100000.0, "thickness":[125000.0], "angle":[90]},
+                     {"length":300000.0, "thickness":[125000.0], "angle":[90,0]}]},
+    {"coordinate":1,
+     "segments":[    {"length":300000.0, "thickness":[125000.0], "angle":[0, 60]},
+                     {"length":200000.0, "thickness":[125000.0], "angle":[60, 90]},
+                     {"length":300000.0, "thickness":[125000.0], "angle":[90]},
+                     {"length":300000.0, "thickness":[125000.0], "angle":[90,0]}]}
+    ],
+    "temperature models":[{"model":"plate model", "density":3300, "plate velocity":0.01, "adiabatic heating":false}],
+    "composition models":[{"model":"uniform", "compositions":[0], "max distance slab top":100000000.0, "min distance slab top":0}]}
+
+  ]
+}

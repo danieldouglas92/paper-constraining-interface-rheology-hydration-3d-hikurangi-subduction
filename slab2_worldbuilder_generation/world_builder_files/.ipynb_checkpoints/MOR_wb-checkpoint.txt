@@ -1,0 +1,19 @@
+{
+  "version":"0.6",
+  "coordinate system":{"model":"spherical", "depth method":"begin at end segment"},
+  "features":
+  [
+
+{
+"model":"mantle layer", "name":"Mantle", "min depth":0, "max depth":660000.0, "coordinates":[[170, 10], [170, -10], [190, -10], [190, 10]],
+"composition models":[{"model":"uniform", "compositions":[0], "max depth":660000.0, "operation":"replace", "min depth":0}]
+},
+
+{
+"model":"oceanic plate", "name":"Oceanic Lithosphere", "min depth":0, "max depth":100000.0, "coordinates":[[170, 10], [170, -10], [190, -10], [190, 10]],
+"temperature models":[{"model":"half space model", "max depth":100000.0, "min depth":0.0, "top temperature":300, "bottom temperature":-1, "spreading velocity":0.02, "ridge coordinates":[[[-169, 0], [-179, 0], [179, 0], [169, 0]]]}], 
+"composition models":[{"model":"uniform", "compositions":[1], "max depth":100000.0, "operation":"replace", "min depth":0}]
+}
+
+]
+}
