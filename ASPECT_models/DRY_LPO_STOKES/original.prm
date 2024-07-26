@@ -1,0 +1,523 @@
+# WORLD BUILDER
+# This test uses the Geodynamic World Builder to create
+# initial temperatures and compositions
+
+set World builder file                         = /home/900358141/Hikurangi_Subduction/world_builder_files/final_world_builder_files/3D/tests/REMOVE_NORTH_10km.wb
+set Use years in output instead of seconds     = true
+set Nonlinear solver scheme                    = single Advection, no Stokes v2
+set Output directory                           = /home/900358141/storage/shared/plate_model/dry/final_suite/LPO_STOKES
+set Adiabatic surface temperature              = 300
+set Surface pressure                           = 0
+set Dimension                                  = 3
+set Nonlinear solver tolerance                 = 1e-5
+set Max nonlinear iterations                   = 200
+set Max nonlinear iterations in pre-refinement = 0
+set End time                                   = 7e6
+set CFL number                                 = 1
+set Resume computation                         = true
+
+subsection Checkpointing
+  # set Steps between checkpoint = 1
+  set Steps between checkpoint = 0
+end
+
+subsection Heating model
+  set List of model names                          = adiabatic heating, shear heating
+
+  subsection Adiabatic heating
+    set Use simplified adiabatic heating           = true
+  end
+end
+
+subsection Boundary temperature model
+  set Fixed temperature boundary indicators = inner, outer
+  set List of model names = spherical constant
+  subsection Spherical constant
+    set Inner temperature  = 2500
+    set Outer temperature  = 300
+  end
+end
+
+subsection Solver parameters
+  subsection Stokes solver parameters
+    set Stokes solver type                              = block AMG
+    set GMRES solver restart length                     = 150
+    set Number of cheap Stokes solver steps             = 5000
+    set Use full A block as preconditioner              = true
+    set Linear solver tolerance                         = 5e-2
+    set Maximum number of expensive Stokes solver steps = 100
+  end
+
+  subsection Newton solver parameters
+    set Max pre-Newton nonlinear iterations               = 50
+    set Nonlinear Newton solver switch tolerance          = 1e-3
+    set Max Newton line search iterations                 = 0
+    set Maximum linear Stokes solver tolerance            = 2.5e-2
+    set Use Newton residual scaling method                = true
+    set Use Newton failsafe                               = false #true
+    set Use Eisenstat Walker method for Picard iterations = true
+  end
+end
+
+subsection Boundary composition model
+  set List of model names = initial composition
+  subsection Initial composition
+    set Maximal composition = 1
+    set Minimal composition = 0
+  end
+end
+
+subsection Boundary velocity model
+  set Tangential velocity boundary indicators = west, north, south, outer, east, inner
+end
+
+subsection Mesh refinement
+  set Initial global refinement                           = 3
+  set Strategy                                            = isosurfaces, maximum refinement function, minimum refinement function
+  set Minimum refinement level                            = 3
+  set Initial adaptive refinement                         = 3
+  set Skip solvers on initial refinement                  = false
+  set Refinement fraction                                 = 1.0
+  set Coarsening fraction                                 = 0
+  set Skip setup initial conditions on initial refinement = false
+  set Refinement criteria merge operation                 = max
+  set Normalize individual refinement criteria            = true
+  set Time steps between mesh refinement                  = 0
+  set Run postprocessors on initial refinement            = false
+
+  subsection Isosurfaces
+    set Isosurfaces = 5, 5, Temperature: 300|1650; max, max, plastic_strain: 0.5|1.0
+  end
+
+  subsection Maximum refinement function
+    set Coordinate system   = spherical
+    set Variable names      = r,phi,theta,t
+    set Function constants  = max_ref=7, mid_slab_ref=7, north_slab_ref=7, lith_ref=5, min_ref=3, lith_depth=160e3, deg2rad=0.0174532925199432951
+    set Function expression = if(169*deg2rad<=phi & phi<=183*deg2rad & 134*deg2rad>=theta & theta>=125*deg2rad, max_ref,\
+                              if(175*deg2rad<=phi & phi<=185*deg2rad & 125*deg2rad>=theta & theta>=115*deg2rad, mid_slab_ref, \
+                              if(177*deg2rad<=phi & phi<=189*deg2rad & 116*deg2rad>=theta & theta>=104*deg2rad, north_slab_ref, min_ref)))
+  end
+
+  subsection Minimum refinement function
+    set Coordinate system   = spherical
+    set Variable names      = r,phi,theta,t
+    set Function constants  = lith_ref=4, lith_depth=200e3, min_ref=3, deg2rad=0.0174532925199432951
+    set Function expression = if(r>=(6371e3 - lith_depth) & phi<=200*deg2rad & phi>=155*deg2rad, lith_ref, min_ref)
+  end
+end
+
+subsection Postprocess
+  set List of postprocessors = visualization, boundary pressures, pressure statistics, velocity statistics, temperature statistics, composition statistics, particles
+  subsection Visualization
+    set List of output variables      = density, viscosity, strain rate, stress second invariant, stress, shear stress, strain rate tensor, adiabat, named additional outputs, heat flux map, depth
+    set Time between graphical output = 1e100
+    set Write higher order output     = false
+    set Interpolate output            = true
+    set Write in background thread    = true
+    set Number of grouped files       = 128
+    set Point-wise stress and strain  = true
+  end
+
+  subsection Particles
+    set Number of particles           = 0
+    set Maximum particles per cell    = 1
+    set Minimum particles per cell    = 1
+    set Load balancing strategy       = remove and add particles
+    set Allow cells without particles = true
+    set Update ghost particles        = true
+
+    set Time between data output    = 1e6
+    set List of particle properties = lpo, lpo elastic tensor, decompose elastic matrix, integrated strain invariant, velocity
+    set Exclude output properties   = a_cosine_matrix, volume fraction
+    set Integration scheme          = rk4
+    set Particle generator name     = ascii file
+    subsection Generator
+      subsection Ascii file
+        set Data directory          = /home/900358141/Hikurangi_Subduction/final_runs/
+        set Data file name          = anisotropy_particle.dat
+      end
+    end
+
+    subsection LPO
+      set Random number seed = 200
+      set Number of grains per praticle = 500 ## Annotation: grain count
+      set Property advection method = Backward Euler #Crank-Nicolson #Backward Euler ## Annotation: Property advection method
+      set Property advection tolerance = 1e-15
+       subsection D-Rex 2004
+         set Minerals = Olivine: Karato 2008, Enstatite ## Annotation: Minerals
+         set Mobility = 125 ## Annotation: LPO Mobility
+         set Volume fractions minerals = 0.7, 0.3 ## Annotation: Volume fractions minerals
+         set Stress exponents = 3.5
+         set Exponents p = 1.5
+         set Nucleation efficientcy = 5 ## Annotation: Nucleation efficientcy
+         set Threshold GBS = 0.3 ## Annotation: TGBS
+       end
+    end
+    subsection LpoBinghamAverage
+      set Random number seed = 200
+    end
+  end
+  subsection LPO
+    set Time between data output = 200000000000
+    set Write in background thread = true
+    set Compress lpo data files = true #false
+      set Write out raw lpo data =
+      set Write out draw volume weighted lpo data =
+  end
+end
+
+
+subsection Compositional fields
+  set Number of fields = 15
+  set Names of fields = Upper_Mantle, Lower_Mantle, Base_Continent, East_Prov_PAC, East_Prov_AUS, Batholith_PAC, Batholith_AUS, TVZ, West_Prov_PAC, West_Prov_AUS, Base_Subducting, Crust, plastic_strain, weak_seed, water
+  set Compositional field methods = static, static, static, static, static, static, static, static, static, static, static, static, static, static, static
+end
+
+
+subsection Material model
+  set Model name                                        = visco plastic
+  set Material averaging                                = harmonic average only viscosity
+
+  subsection Visco Plastic
+    set Viscous flow law                                = 	composite
+    set Viscosity averaging scheme                      = 	harmonic
+
+########## Diffusion Creep #########
+# Only the Upper Mantle, Lower Mantle, and the Subducting Lithosphere have Diffusion Creep. 
+# All other fields are dislocation and Peierls Creep only.
+####################################
+
+    set Stress exponents for diffusion creep            = 	1
+
+    set Prefactors for diffusion creep                  =   background:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
+                                                            Upper_Mantle:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
+                                                            Lower_Mantle:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
+                                                            Base_Continent:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
+                                                            East_Prov_PAC:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
+                                                            East_Prov_AUS:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
+                                                            Batholith_PAC:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
+                                                            Batholith_AUS:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
+                                                            TVZ:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
+                                                            West_Prov_PAC:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
+                                                            West_Prov_AUS:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
+                                                            Base_Subducting:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
+                                                            Crust:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
+                                                            plastic_strain:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
+                                                            weak_seed:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
+                                                            water:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15
+
+    set Activation energies for diffusion creep         = 	background:375e3|375e3|375e3|375e3|375e3, \
+                                                            Upper_Mantle:375e3|375e3|375e3|375e3|375e3, \
+                                                            Lower_Mantle:375e3|375e3|375e3|375e3|375e3, \
+                                                            Base_Continent:375e3|375e3|375e3|375e3|375e3, \
+                                                            East_Prov_PAC:375e3|375e3|375e3|375e3|375e3, \
+                                                            East_Prov_AUS:375e3|375e3|375e3|375e3|375e3, \
+                                                            Batholith_PAC:375e3|375e3|375e3|375e3|375e3, \
+                                                            Batholith_AUS:375e3|375e3|375e3|375e3|375e3, \
+                                                            TVZ:375e3|375e3|375e3|375e3|375e3, \
+                                                            West_Prov_PAC:375e3|375e3|375e3|375e3|375e3, \
+                                                            West_Prov_AUS:375e3|375e3|375e3|375e3|375e3, \
+                                                            Base_Subducting:375e3|375e3|375e3|375e3|375e3, \
+                                                            Crust:375e3|375e3|375e3|375e3|375e3, \
+                                                            plastic_strain:375e3|375e3|375e3|375e3|375e3, \
+                                                            weak_seed:375e3|375e3|375e3|375e3|375e3, \
+                                                            water:375e3|375e3|375e3|375e3|375e3
+
+    set Activation volumes for diffusion creep          = 	background:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
+                                                            Upper_Mantle:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
+                                                            Lower_Mantle:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
+                                                            Base_Continent:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
+                                                            East_Prov_PAC:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
+                                                            East_Prov_AUS:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
+                                                            Batholith_PAC:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
+                                                            Batholith_AUS:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
+                                                            TVZ:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
+                                                            West_Prov_PAC:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
+                                                            West_Prov_AUS:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
+                                                            Base_Subducting:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
+                                                            Crust:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
+                                                            plastic_strain:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
+                                                            weak_seed:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
+                                                            water:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6
+
+    set Grain size                                      = 	1e-3
+
+    set Grain size exponents for diffusion creep        = 	3
+
+######### Dislocation Creep ###########
+# All compositions have Dislocation creep EXCEPT the Lower Mantle. Wet Olivne Dislocation for the Upper Mantle,
+# Dry Olivine Dislocation for the Subducting Lithosphere. Wet Quartzite for the
+# Overriding lithosphere and the sediment weak zone. Gabbro for the oceanic crust.
+#######################################
+
+    set Stress exponents for dislocation creep          =     background:3.5|3.5|3.5|3.5|3.5, \
+                                                              Upper_Mantle:3.5|3.5|3.5|3.5|3.5, \
+                                                              Lower_Mantle:3.5|3.5|3.5|3.5|3.5, \
+                                                              Base_Continent:3.5|3.5|3.5|3.5|3.5, \
+                                                              East_Prov_PAC:3.5|3.5|3.5|3.5|3.5, \
+                                                              East_Prov_AUS:3.5|3.5|3.5|3.5|3.5, \
+                                                              Batholith_PAC:3.5|3.5|3.5|3.5|3.5, \
+                                                              Batholith_AUS:3.5|3.5|3.5|3.5|3.5, \
+                                                              TVZ:3.5|3.5|3.5|3.5|3.5, \
+                                                              West_Prov_PAC:3.5|3.5|3.5|3.5|3.5, \
+                                                              West_Prov_AUS:3.5|3.5|3.5|3.5|3.5, \
+                                                              Base_Subducting:3.5|3.5|3.5|3.5|3.5, \
+                                                              Crust:3.5|3.5|3.5|3.5|3.5, \
+                                                              plastic_strain:3.5|3.5|3.5|3.5|3.5, \
+                                                              weak_seed:3.5|3.5|3.5|3.5|3.5, \
+                                                              water:3.5|3.5|3.5|3.5|3.5
+
+    set Prefactors for dislocation creep                =     background:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
+                                                              Upper_Mantle:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
+                                                              Lower_Mantle:1e-50|1e-50|1e-50|1e-50|1e-50, \
+                                                              Base_Continent:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
+                                                              East_Prov_PAC:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
+                                                              East_Prov_AUS:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
+                                                              Batholith_PAC:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
+                                                              Batholith_AUS:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
+                                                              TVZ:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
+                                                              West_Prov_PAC:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
+                                                              West_Prov_AUS:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
+                                                              Base_Subducting:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
+                                                              Crust:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
+                                                              plastic_strain:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
+                                                              weak_seed:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
+                                                              water:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15
+
+    set Activation energies for dislocation creep       =     background:530e3|530e3|530e3|530e3|530e3, \
+                                                              Upper_Mantle:530e3|530e3|530e3|530e3|530e3, \
+                                                              Lower_Mantle:530e3|530e3|530e3|530e3|530e3, \
+                                                              Base_Continent:530e3|530e3|530e3|530e3|530e3, \
+                                                              East_Prov_PAC:530e3|530e3|530e3|530e3|530e3, \
+                                                              East_Prov_AUS:530e3|530e3|530e3|530e3|530e3, \
+                                                              Batholith_PAC:530e3|530e3|530e3|530e3|530e3, \
+                                                              Batholith_AUS:530e3|530e3|530e3|530e3|530e3, \
+                                                              TVZ:530e3|530e3|530e3|530e3|530e3, \
+                                                              West_Prov_PAC:530e3|530e3|530e3|530e3|530e3, \
+                                                              West_Prov_AUS:530e3|530e3|530e3|530e3|530e3, \
+                                                              Base_Subducting:530e3|530e3|530e3|530e3|530e3, \
+                                                              Crust:530e3|530e3|530e3|530e3|530e3, \
+                                                              plastic_strain:530e3|530e3|530e3|530e3|530e3, \
+                                                              weak_seed:530e3|530e3|530e3|530e3|530e3, \
+                                                              water:530e3|530e3|530e3|530e3|530e3
+
+    set Activation volumes for dislocation creep        =     background:14e-6|14e-6|14e-6|14e-6|14e-6, \
+                                                              Upper_Mantle:14e-6|14e-6|14e-6|14e-6|14e-6, \
+                                                              Lower_Mantle:14e-6|14e-6|14e-6|14e-6|14e-6, \
+                                                              Base_Continent:14e-6|14e-6|14e-6|14e-6|14e-6, \
+                                                              East_Prov_PAC:14e-6|14e-6|14e-6|14e-6|14e-6, \
+                                                              East_Prov_AUS:14e-6|14e-6|14e-6|14e-6|14e-6, \
+                                                              Batholith_PAC:14e-6|14e-6|14e-6|14e-6|14e-6, \
+                                                              Batholith_AUS:14e-6|14e-6|14e-6|14e-6|14e-6, \
+                                                              TVZ:14e-6|14e-6|14e-6|14e-6|14e-6, \
+                                                              West_Prov_PAC:14e-6|14e-6|14e-6|14e-6|14e-6, \
+                                                              West_Prov_AUS:14e-6|14e-6|14e-6|14e-6|14e-6, \
+                                                              Base_Subducting:14e-6|14e-6|14e-6|14e-6|14e-6, \
+                                                              Crust:14e-6|14e-6|14e-6|14e-6|14e-6, \
+                                                              plastic_strain:14e-6|14e-6|14e-6|14e-6|14e-6, \
+                                                              weak_seed:14e-6|14e-6|14e-6|14e-6|14e-6, \
+                                                              water:14e-6|14e-6|14e-6|14e-6|14e-6
+
+
+######### Peierls Creep #########
+# Except for the Upper and Lower Mantle, all compositions will have the Peierls Creep Viscosity Approximation applied to them.
+#################################
+
+    set Include Peierls creep                           = 	true
+    set Peierls creep flow law                          = 	viscosity approximation
+    set Peierls glide parameters p                      = 	0.5
+    set Peierls fitting parameters                      = 	0.17
+    set Stress exponents for Peierls creep              = 	2.0
+    set Peierls glide parameters q                      = 	1.0
+    set Peierls stresses                                = 	5.9e9
+
+    set Prefactors for Peierls creep                    = 	background:1.4e-19|1.4e-19|1.4e-19|1.4e-19|1.4e-19, \
+                                                            Upper_Mantle:1e-50|1e-50|1e-50|1e-50|1e-50, \
+                                                            Lower_Mantle:1e-50|1e-50|1e-50|1e-50|1e-50, \
+                                                            Base_Continent:1.4e-19|1.4e-19|1.4e-19|1.4e-19|1.4e-19, \
+                                                            East_Prov_PAC:1.4e-19|1.4e-19|1.4e-19|1.4e-19|1.4e-19, \
+                                                            East_Prov_AUS:1.4e-19|1.4e-19|1.4e-19|1.4e-19|1.4e-19, \
+                                                            Batholith_PAC:1.4e-19|1.4e-19|1.4e-19|1.4e-19|1.4e-19, \
+                                                            Batholith_AUS:1.4e-19|1.4e-19|1.4e-19|1.4e-19|1.4e-19, \
+                                                            TVZ:1.4e-19|1.4e-19|1.4e-19|1.4e-19|1.4e-19, \
+                                                            West_Prov_PAC:1.4e-19|1.4e-19|1.4e-19|1.4e-19|1.4e-19, \
+                                                            West_Prov_AUS:1.4e-19|1.4e-19|1.4e-19|1.4e-19|1.4e-19, \
+                                                            Base_Subducting:1.4e-19|1.4e-19|1.4e-19|1.4e-19|1.4e-19, \
+                                                            Crust:1.4e-19|1.4e-19|1.4e-19|1.4e-19|1.4e-19, \
+                                                            plastic_strain:1.4e-19|1.4e-19|1.4e-19|1.4e-19|1.4e-19, \
+                                                            weak_seed:1.4e-19|1.4e-19|1.4e-19|1.4e-19|1.4e-19, \
+                                                            water:1.4e-19|1.4e-19|1.4e-19|1.4e-19|1.4e-19
+
+    set Activation energies for Peierls creep           = 	320e3
+    set Activation volumes for Peierls creep            = 	0.0
+    set Peierls strain rate residual tolerance          = 	1e-22
+    set Maximum Peierls strain rate iterations          = 	40
+
+######### Phase Transitions  #########
+## Mantle and subducting lithosphere have background densities of 3300 kg/m3
+## Overriding Lithosphere has density of 2700 kg/m3
+## Oceanic subducting crust has density of 3000 kg/m3
+#####################################
+
+    set Densities                                       =	background:3300|3300|3470|3560|3860, \
+                                                          Upper_Mantle:3300|3300|3470|3560|3860, \
+                                                          Lower_Mantle:3300|3300|3470|3560|3860, \
+                                                          Base_Continent:3300|3300|3470|3560|3860, \
+                                                          East_Prov_PAC:3300|3300|3470|3560|3860, \
+                                                          East_Prov_AUS:3300|3300|3470|3560|3860, \
+                                                          Batholith_PAC:3300|3300|3470|3560|3860, \
+                                                          Batholith_AUS:3300|3300|3470|3560|3860, \
+                                                          TVZ:3300|3300|3470|3560|3860, \
+                                                          West_Prov_PAC:3300|3300|3470|3560|3860, \
+                                                          West_Prov_AUS:3300|3300|3470|3560|3860, \
+                                                          Base_Subducting:3300|3300|3470|3560|3860, \
+                                                          Crust:3000|3600|3600|3600|3600, \
+                                                          plastic_strain:3300|3300|3470|3560|3860, \
+                                                          weak_seed:3300|3300|3470|3560|3860, \
+								                                          water:3300|3300|3470|3560|3860
+
+    set Define transition by depth instead of pressure  = 	true
+
+    set Phase transition depths                         = 	background:65e3|410e3|520e3|660e3, \
+                                                            Upper_Mantle:65e3|410e3|520e3|660e3, \
+                                                            Lower_Mantle:65e3|410e3|520e3|660e3, \
+                                                            Base_Continent:65e3|410e3|520e3|660e3, \
+                                                            East_Prov_PAC:65e3|410e3|520e3|660e3, \
+                                                            East_Prov_AUS:65e3|410e3|520e3|660e3, \
+                                                            Batholith_PAC:65e3|410e3|520e3|660e3, \
+                                                            Batholith_AUS:65e3|410e3|520e3|660e3, \
+                                                            TVZ:65e3|410e3|520e3|660e3, \
+                                                            West_Prov_PAC:65e3|410e3|520e3|660e3, \
+                                                            West_Prov_AUS:65e3|410e3|520e3|660e3, \
+                                                            Base_Subducting:65e3|410e3|520e3|660e3, \
+                                                            Crust:65e3|410e3|520e3|660e3, \
+                                                            plastic_strain:65e3|410e3|520e3|660e3, \
+                                                            weak_seed:65e3|410e3|520e3|660e3, \
+                                                            water:65e3|410e3|520e3|660e3
+
+    set Phase transition widths                         = 	background:30e3|13e3|25e3|5e3, \
+                                                            Upper_Mantle:30e3|13e3|25e3|5e3, \
+                                                            Lower_Mantle:30e3|13e3|25e3|5e3, \
+                                                            Base_Continent:30e3|13e3|25e3|5e3, \
+                                                            East_Prov_PAC:30e3|13e3|25e3|5e3, \
+                                                            East_Prov_AUS:30e3|13e3|25e3|5e3, \
+                                                            Batholith_PAC:30e3|13e3|25e3|5e3, \
+                                                            Batholith_AUS:30e3|13e3|25e3|5e3, \
+                                                            TVZ:30e3|13e3|25e3|5e3, \
+                                                            West_Prov_PAC:30e3|13e3|25e3|5e3, \
+                                                            West_Prov_AUS:30e3|13e3|25e3|5e3, \
+                                                            Base_Subducting:30e3|13e3|25e3|5e3, \
+                                                            Crust:30e3|13e3|25e3|5e3, \
+                                                            plastic_strain:30e3|13e3|25e3|5e3, \
+                                                            weak_seed:30e3|13e3|25e3|5e3, \
+                                                            water:30e3|13e3|25e3|5e3
+
+    set Phase transition temperatures                   = 	background:973|1800|1860|1920, \
+                                                            Upper_Mantle:973|1800|1860|1920, \
+                                                            Lower_Mantle:973|1800|1860|1920, \
+                                                            Base_Continent:973|1800|1860|1920, \
+                                                            East_Prov_PAC:973|1800|1860|1920, \
+                                                            East_Prov_AUS:973|1800|1860|1920, \
+                                                            Batholith_PAC:973|1800|1866|1920, \
+                                                            Batholith_AUS:973|1800|1866|1920, \
+                                                            TVZ:973|1800|1860|1920, \
+                                                            West_Prov_PAC:973|1800|1860|1920, \
+                                                            West_Prov_AUS:973|1800|1860|1920, \
+                                                            Base_Subducting:973|1800|1860|1920, \
+                                                            Crust:973|1800|1860|1920, \
+                                                            plastic_strain:973|1800|1860|1920, \
+                                                            weak_seed:973|1800|1860|1920, \
+                                                            water:973|1800|1860|1920
+
+    set Phase transition Clapeyron slopes               = 	background:0.0|4e6|4.1e6|-2e6, \
+                                                            Upper_Mantle:0.0|4e6|4.1e6|-2e6, \
+                                                            Lower_Mantle:0.0|4e6|4.1e6|-2e6, \
+                                                            Base_Continent:0.0|4e6|4.1e6|-2e6, \
+                                                            East_Prov_PAC:0.0|4e6|4.1e6|-2e6, \
+                                                            East_Prov_AUS:0.0|4e6|4.1e6|-2e6, \
+                                                            Batholith_PAC:0.0|4e6|4.1e6|-2e6, \
+                                                            Batholith_AUS:0.0|4e6|4.1e6|-2e6, \
+                                                            TVZ:0.0|4e6|4.1e6|-2e6, \
+                                                            West_Prov_PAC:0.0|4e6|4.1e6|-2e6, \
+                                                            West_Prov_AUS:0.0|4e6|4.1e6|-2e6, \
+                                                            Base_Subducting:0.0|4e6|4.1e6|-2e6, \
+                                                            Crust:0.0|4e6|4.1e6|-2e6, \
+                                                            plastic_strain:0.0|4e6|4.1e6|-2e6, \
+                                                            weak_seed:0.0|4e6|4.1e6|-2e6, \
+								                                            water:0.0|4e6|4.1e6|-2e6
+
+
+# Plasticity
+    set Heat capacities                                 = 1250
+    set Thermal conductivities                          = 3.3
+    set Thermal diffusivities                           = 0.8e-6
+    set Thermal expansivities                           = 0.000035
+
+
+    set Maximum viscosity                               = 1e24
+    set Minimum viscosity                               = 1e19
+    set Maximum yield stress                            = 1000e6
+    set Cohesions                                       = 100e6, 100e6, 100e6, 100e6, 100e6, 100e6, 100e6, 100e6, 100e6, 100e6, 100e6, 100e6, 100e6, 100e6, 10e6, 100e6
+    set Angles of internal friction                     = 30,    30,    30,    30,    30,    30,    30,    30,    30,    30,    30,    30,    30,    30,    0,    30
+    set Use plastic damper                              = true
+    set Plastic damper viscosity                        = 5e20
+    
+    set Strain weakening mechanism                      = plastic weakening with plastic strain only
+    set Friction strain weakening factors               = 0.5
+    set Cohesion strain weakening factors               = 0.5
+    set Start plasticity strain weakening intervals     = 0
+    set End plasticity strain weakening intervals       = 1
+  end
+end
+
+
+subsection Geometry model
+  set Model name = chunk
+  subsection Chunk
+    set Chunk inner radius = 4771e3
+    set Chunk outer radius = 6371e3
+    set Radius repetitions = 5
+
+    set Chunk maximum latitude = -20
+    set Chunk minimum latitude = -55
+    set Latitude repetitions   = 12
+
+    set Chunk maximum longitude = 210
+    set Chunk minimum longitude = 152
+    set Longitude repetitions   = 17
+  end
+end
+
+subsection Gravity model
+  set Model name = radial constant
+  subsection Radial constant
+    set Magnitude = 9.81
+  end
+end
+
+subsection Initial temperature model
+  set Model name = world builder
+end
+
+subsection Temperature field
+  set Temperature method = static
+end
+
+subsection Initial composition model
+
+  set List of model names = world builder, function
+  subsection World builder
+    set List of relevant compositions = Upper_Mantle, Lower_Mantle, Base_Continent, East_Prov_PAC, East_Prov_AUS, Batholith_PAC, Batholith_AUS, TVZ, West_Prov_PAC, West_Prov_AUS, Base_Subducting, Crust, plastic_strain
+  end
+
+  subsection Function
+    set Coordinate system   = spherical
+    set Variable names      = r,phi,theta
+    set Function constants  = deg2rad=0.0174532925199432951
+    set Function expression = 0;0;0;0;0;0;0;0;0;0;0;0;0;if(r>=6271e3 & phi>=209.68*deg2rad, 1, 0);0
+    # set Function expression = 0;0;0;0;0;0;0;0;0;0;0;0;0;if(r>=6271e3 & phi>=219.68*deg2rad, 1, 0);0
+  end
+end
+
+
+
