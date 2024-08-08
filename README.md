@@ -4,12 +4,12 @@ This repository is assosciated with the publication
 
 by
 
-Douglas, D.
-Naliboff, J.
-Fraters, M. R. T.
-Dannberg, J.
-Eberhart-Philips, D.
-Ellis, S.
+Douglas, D.,
+Naliboff, J.,
+Fraters, M. R. T.,
+Dannberg, J.,
+Eberhart-Philips, D.,
+Ellis, S.,
 
 which is currently in review.
 
