@@ -1,14 +1,20 @@
 #!/bin/sh
-convert dry_LPO_cross_sections.png wet_LPO_cross_sections.png +smush 25 total_LPO_depth_cross_sections.png
-convert schematic_diagram.png 3d_slab_underview.png depth_tectonics.png -smush 25 schematic_figure.png
-convert hikurangi_density.png middle_density.png kermadec_density.png -smush 25 density_cross_sections.png
-convert 1km_depth_visc.png 150km_depth_visc.png vel_visc_colourbar.png -smush 25 depth_viscosity_cross_sections.png
+convert dry_LPO_cross_sections.png wet_LPO_cross_sections.png var_LPO_cross_sections.png +smush 0 total_LPO_depth_cross_sections.png
+convert schematic_diagram.png 3d_slab_view.png depth_tectonics.png -smush 25 schematic_figure.png
+convert hikurangi_density.png middle_density.png kermadec_density.png density_colourbar.png -smush 25 density_cross_sections.png
+convert 5_km_visc_cross_section.png 150_km_visc_cross_section.png vel_visc_colourbar.png -smush 25 depth_viscosity_cross_sections.png
 convert spherical_mesh.png plateau_interface.png temperature_colourbar.png -smush 25 mesh_interface.png
 
-convert convergence_rates_figures/vel_dry_1e20.png convergence_rates_figures/vel_dry_5e20.png convergence_rates_figures/vel_dry_1e21.png +smush 10 convergence_rates_figures/top_row.png
-convert convergence_rates_figures/vel_wet_upper_mantle_5e20.png convergence_rates_figures/vel_wet_slab_5e20.png convergence_rates_figures/vel_wet_crust_5e20.png +smush 10 convergence_rates_figures/bot_row.png
-convert convergence_rates_figures/top_row.png convergence_rates_figures/bot_row.png -smush 150 total_velocity.png
+convert convergence_rates_figures/vel_dry_1e20.png convergence_rates_figures/vel_dry_5e20.png convergence_rates_figures/vel_dry_1e21.png +smush 10 convergence_rates_figures/dry_velocity.png
 
-convert convergence_rates_figures/vel_no_extension.png convergence_rates_figures/vel_extend_north.png convergence_rates_figures/vel_extend_south.png +smush 10 convergence_rates_figures/additional_top_row.png
-convert convergence_rates_figures/vel_move_north.png convergence_rates_figures/vel_open_north.png convergence_rates_figures/vel_open_bottom.png +smush 10 convergence_rates_figures/additional_bot_row.png
-convert convergence_rates_figures/additional_top_row.png convergence_rates_figures/additional_bot_row.png -smush 10 additional_velocity.png
+convert convergence_rates_figures/vel_wet_slab_5e20.png convergence_rates_figures/vel_wet_crust_5e20.png +smush 10 convergence_rates_figures/top_row_wet_velocity.png
+
+convert convergence_rates_figures/vel_wet_upper_mantle_5e20.png convergence_rates_figures/vel_wet_variable_5e20.png +smush 10 convergence_rates_figures/bot_row_wet_velocity.png
+
+convert convergence_rates_figures/top_row_wet_velocity.png convergence_rates_figures/bot_row_wet_velocity.png -smush 250 convergence_rates_figures/wet_velocity.png
+
+
+convert convergence_rates_figures/vel_dry_5e20_NO_EXTENSION.png convergence_rates_figures/vel_Alpine_Fault.png convergence_rates_figures/vel_Alpine_Fault_PAC_AUS.png +smush 10 convergence_rates_figures/boundary_velocity.png
+
+
+convert stress_state.png AF_stress_state.png +smush 25 combined_stress_state.png 
