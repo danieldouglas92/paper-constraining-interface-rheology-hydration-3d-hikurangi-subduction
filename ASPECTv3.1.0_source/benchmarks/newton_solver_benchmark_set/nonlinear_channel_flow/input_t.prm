@@ -1,0 +1,17 @@
+# Like input_v.prm and based on the nonlinear channel
+# flow benchmark. This is used to test the traction boundary conditions
+# of the Newton Stokes solver.
+
+include $ASPECT_SOURCE_DIR/benchmarks/newton_solver_benchmark_set/nonlinear_channel_flow/input_v.prm
+
+set Output directory = output_t
+
+subsection Boundary velocity model
+  # pressure bc: Prescribe a zero vertical velocity component on the vertical boundaries
+  set Prescribed velocity boundary indicators = bottom x: function, top x: function
+end
+
+subsection Boundary traction model
+  # pressure bc: Prescribe a horizontal traction on the vertical boundaries
+  set Prescribed traction boundary indicators = bottom y: function, top y: function
+end
