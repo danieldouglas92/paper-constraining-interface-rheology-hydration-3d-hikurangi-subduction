@@ -1,3 +1,0 @@
-[submodule "contrib/WorldBuilder"]
-	path = contrib/WorldBuilder
-	url = https://github.com/GeodynamicWorldBuilder/WorldBuilder.git

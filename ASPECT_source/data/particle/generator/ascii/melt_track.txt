@@ -1,5 +1,0 @@
-# Columns: x_coordinate y_coordinate
-
-5 200
-5 100
-5 300
