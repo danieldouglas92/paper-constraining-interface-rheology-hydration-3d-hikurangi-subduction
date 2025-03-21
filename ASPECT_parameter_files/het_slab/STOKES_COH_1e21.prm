@@ -5,12 +5,12 @@
 set World builder file                         = /home/900358141/Hikurangi_Subduction/final_runs/plate_model/wet/variable_hydration/world_builder_files/10km_weakzone_hydrated_3D.wb
 set Use years in output instead of seconds     = true
 set Nonlinear solver scheme                    = single Advection, iterated defect correction Stokes
-set Output directory                           = /home/900358141/storage/shared/plate_model/wet/variable_hydration/5e20_variable_hydration
+set Output directory                           = /home/900358141/storage/shared/plate_model/wet/variable_hydration/1e21_variable_hydration_new_CONVERGE_NEW
 set Adiabatic surface temperature              = 300
 set Surface pressure                           = 0
 set Dimension                                  = 3
-set Nonlinear solver tolerance                 = 1e-5
-set Max nonlinear iterations                   = 200
+set Nonlinear solver tolerance                 = 2e-5
+set Max nonlinear iterations                   = 750
 set Max nonlinear iterations in pre-refinement = 0
 set End time                                   = 0
 set CFL number                                 = 1
@@ -35,7 +35,7 @@ subsection Solver parameters
     set GMRES solver restart length                     = 1000
     set Number of cheap Stokes solver steps             = 20000
     set Use full A block as preconditioner              = true
-    set Linear solver tolerance                         = 5e-2
+    set Linear solver tolerance                         = 5e-3
     set Maximum number of expensive Stokes solver steps = 100
   end
 
@@ -43,7 +43,7 @@ subsection Solver parameters
     set Max pre-Newton nonlinear iterations               = 50
     set Nonlinear Newton solver switch tolerance          = 1e-3
     set Max Newton line search iterations                 = 0
-    set Maximum linear Stokes solver tolerance            = 2.5e-2
+    set Maximum linear Stokes solver tolerance            = 2.5e-3
     set Use Newton residual scaling method                = true
     set Use Newton failsafe                               = false #true
     set Use Eisenstat Walker method for Picard iterations = true
@@ -77,7 +77,7 @@ subsection Mesh refinement
   set Run postprocessors on initial refinement            = false
 
   subsection Isosurfaces
-    set Isosurfaces = 5, 5, Temperature: 300|1650; max, max, plastic_strain: 0.5|1.0; 6, 6, Crust: 0.5|1.0
+    set Isosurfaces = 5, 5, Temperature: 300|1650; max, max, plastic_strain: 0.5|1.0 #; 6, 6, Crust: 0.5|1.0
   end
 
   subsection Maximum refinement function
@@ -172,7 +172,8 @@ end
 subsection Compositional fields
   set Number of fields            = 13
   set Names of fields             = Upper_Mantle, Lower_Mantle, Base_Continent, East_Prov, Batholith, TVZ, West_Prov, Base_Subducting, Crust, plastic_strain, weak_seed, water, bound_fluid
-  set Compositional field methods = field,        field,        field,          field,     field,     field, field,   field,           field, field,          field,     field, field
+  set Compositional field methods = field,       field,       field,         field,    field,    field, field, field,          field, field,        field,    static, static
+  set Types of fields = chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, generic, generic
 end
 
 subsection Initial composition model
@@ -207,7 +208,7 @@ subsection Material model
 
     set Stress exponents for diffusion creep            = 	1
 
-    set Water fugacity exponents for diffusion creep    =     0, 0, 0, 0, 0, 0, 0, 0, 0.7, 0.7, 0, 0, 0, 0
+    set Water fugacity exponents for diffusion creep    =     0, 0, 0, 0, 0, 0, 0, 0, 0.7, 0.7, 0, 0, 0.7, 0.7
 
     set Prefactors for diffusion creep                  =   background:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
                                                             Upper_Mantle:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
@@ -221,8 +222,8 @@ subsection Material model
                                                             Crust:1.577e-21|1.577e-21|1.577e-21|1.577e-21|1.577e-21, \
                                                             plastic_strain:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
                                                             weak_seed:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
-                                                            water:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
-                                                            bound_fluid:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15
+                                                            water:1.577e-21|1.577e-21|1.577e-21|1.577e-21|1.577e-21, \
+                                                            bound_fluid:1.577e-21|1.577e-21|1.577e-21|1.577e-21|1.577e-21
 
     set Activation energies for diffusion creep         = 	background:375e3|375e3|375e3|375e3|375e3, \
                                                             Upper_Mantle:375e3|375e3|375e3|375e3|375e3, \
@@ -251,8 +252,8 @@ subsection Material model
                                                             Crust:11e-6|11e-6|11e-6|11e-6|11e-6, \
                                                             plastic_strain:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
                                                             weak_seed:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
-                                                            water:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
-                                                            bound_fluid:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6
+                                                            water:11e-6|11e-6|11e-6|11e-6|11e-6, \
+                                                            bound_fluid:11e-6|11e-6|11e-6|11e-6|11e-6
 
     set Grain size                                      = 	1e-3
 
@@ -264,7 +265,7 @@ subsection Material model
 # Overriding lithosphere and the sediment weak zone. Gabbro for the oceanic crust.
 #######################################
 
-    set Water fugacity exponents for dislocation creep  =     0, 0, 0, 0, 0, 0, 0, 0.3429, 0.3429, 0, 0, 0, 0  
+    set Water fugacity exponents for dislocation creep  =     0, 0, 0, 0, 0, 0, 0, 0, 0.3429, 0.3429, 0, 0, 0.3429, 0.3429
 
     set Stress exponents for dislocation creep          =     background:3.5|3.5|3.5|3.5|3.5, \
                                                               Upper_Mantle:3.5|3.5|3.5|3.5|3.5, \
@@ -293,8 +294,8 @@ subsection Material model
                                                               Crust:1.01e-25|1.01e-25|1.01e-25|1.01e-25|1.01e-25, \
                                                               plastic_strain:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
                                                               weak_seed:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
-                                                              water:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
-                                                              bound_fluid:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15
+                                                              water:1.01e-25|1.01e-25|1.01e-25|1.01e-25|1.01e-25, \
+                                                              bound_fluid:1.01e-25|1.01e-25|1.01e-25|1.01e-25|1.01e-25
 
     set Activation energies for dislocation creep       =     background:530e3|530e3|530e3|530e3|530e3, \
                                                               Upper_Mantle:530e3|530e3|530e3|530e3|530e3, \
@@ -308,8 +309,8 @@ subsection Material model
                                                               Crust:520e3|520e3|520e3|520e3|520e3, \
                                                               plastic_strain:530e3|530e3|530e3|530e3|530e3, \
                                                               weak_seed:530e3|530e3|530e3|530e3|530e3, \
-                                                              water:530e3|530e3|530e3|530e3|530e3, \
-                                                              bound_fluid:530e3|530e3|530e3|530e3|530e3
+                                                              water:520e3|520e3|520e3|520e3|520e3, \
+                                                              bound_fluid:520e3|520e3|520e3|520e3|520e3
 
     set Activation volumes for dislocation creep        =     background:14e-6|14e-6|14e-6|14e-6|14e-6, \
                                                               Upper_Mantle:14e-6|14e-6|14e-6|14e-6|14e-6, \
@@ -323,8 +324,8 @@ subsection Material model
                                                               Crust:22e-6|22e-6|22e-6|22e-6|22e-6, \
                                                               plastic_strain:14e-6|14e-6|14e-6|14e-6|14e-6, \
                                                               weak_seed:14e-6|14e-6|14e-6|14e-6|14e-6, \
-                                                              water:14e-6|14e-6|14e-6|14e-6|14e-6, \
-                                                              bound_fluid:14e-6|14e-6|14e-6|14e-6|14e-6
+                                                              water:22e-6|22e-6|22e-6|22e-6|22e-6, \
+                                                              bound_fluid:22e-6|22e-6|22e-6|22e-6|22e-6
 
 
 ######### Peierls Creep #########
@@ -456,7 +457,7 @@ subsection Material model
     set Cohesions                                       = 100e6, 100e6, 100e6, 100e6, 100e6, 100e6, 100e6, 100e6, 100e6, 100e6, 100e6, 10e6, 100e6, 100e6
     set Angles of internal friction                     = 30,    30,    30,    30,    30,    30,    30,    30,    30,    30,    30,    5,    30,    30
     set Use plastic damper                              = true
-    set Plastic damper viscosity                        = 5e20
+    set Plastic damper viscosity                        = 1e21
     
     set Strain weakening mechanism                      = plastic weakening with plastic strain only
     set Friction strain weakening factors               = 0.5
@@ -496,7 +497,7 @@ subsection Initial temperature model
 end
 
 subsection Temperature field
-  set Temperature method = field
+  set Temperature method = field 
 end
 
 

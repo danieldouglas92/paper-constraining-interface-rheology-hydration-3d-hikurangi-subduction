@@ -2,15 +2,17 @@
 # This test uses the Geodynamic World Builder to create
 # initial temperatures and compositions
 
-set World builder file                         = /home/900358141/Hikurangi_Subduction/world_builder_files/final_world_builder_files/3D/tests/REMOVE_NORTH_10km.wb
+# set World builder file                         = /home/900358141/Hikurangi_Subduction/world_builder_files/final_world_builder_files/3D/tests/REMOVE_NORTH_10km.wb
+# set World builder file                         = /home/900358141/Hikurangi_Subduction/world_builder_files/final_world_builder_files/3D/tests/fix_ridge_test.wb
+set World builder file                         = /home/900358141/Hikurangi_Subduction/world_builder_files/final_world_builder_files/3D/tests/REAL/REMOVE_NORTH_10km_wet_crust.wb
 set Use years in output instead of seconds     = true
 set Nonlinear solver scheme                    = single Advection, iterated defect correction Stokes
-set Output directory                           = /home/900358141/storage/shared/plate_model/wet/wet_crust/final_suite/1e20_10kmweak_wet_crust
+set Output directory                           = /home/900358141/storage/shared/plate_model/wet/wet_crust/final_suite/1e20_10kmweak_wet_crust_FIX_RIDGE_NEW_WB
 set Adiabatic surface temperature              = 300
 set Surface pressure                           = 0
 set Dimension                                  = 3
-set Nonlinear solver tolerance                 = 1e-5
-set Max nonlinear iterations                   = 1000
+set Nonlinear solver tolerance                 = 2e-5
+set Max nonlinear iterations                   = 750
 set Max nonlinear iterations in pre-refinement = 0
 set End time                                   = 0
 set CFL number                                 = 1
@@ -170,6 +172,7 @@ subsection Compositional fields
   set Number of fields = 15
   set Names of fields = Upper_Mantle, Lower_Mantle, Base_Continent, East_Prov_PAC, East_Prov_AUS, Batholith_PAC, Batholith_AUS, TVZ, West_Prov_PAC, West_Prov_AUS, Base_Subducting, Crust, plastic_strain, weak_seed, water
   set Compositional field methods = field, field, field, field, field, field, field, field, field, field, field, field, field, field, field
+  set Types of fields = chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, chemical composition, generic
 end
 
 
@@ -203,7 +206,7 @@ subsection Material model
                                                             Crust:3e-15|3e-15|3e-15|3e-15|3e-15, \
                                                             plastic_strain:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
                                                             weak_seed:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15, \
-                                                            water:4.5e-15|4.5e-15|4.5e-15|4.5e-15|4.5e-15
+                                                            water:3e-15|3e-15|3e-15|3e-15|3e-15
 
     set Activation energies for diffusion creep         =       background:375e3|375e3|375e3|375e3|375e3, \
                                                             Upper_Mantle:375e3|375e3|375e3|375e3|375e3, \
@@ -220,7 +223,7 @@ subsection Material model
                                                             Crust:335e3|335e3|335e3|335e3|335e3, \
                                                             plastic_strain:375e3|375e3|375e3|375e3|375e3, \
                                                             weak_seed:375e3|375e3|375e3|375e3|375e3, \
-                                                            water:375e3|375e3|375e3|375e3|375e3
+                                                            water:335e3|335e3|335e3|335e3|335e3
 
     set Activation volumes for diffusion creep          =       background:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
                                                             Upper_Mantle:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
@@ -237,7 +240,7 @@ subsection Material model
                                                             Crust:4e-6|4e-6|4e-6|4e-6|4e-6, \
                                                             plastic_strain:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
                                                             weak_seed:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6, \
-                                                            water:8.2e-6|8.2e-6|8.2e-6|8.2e-6|8.2e-6
+                                                            water:4e-6|4e-6|4e-6|4e-6|4e-6
 
     set Grain size                                      = 	1e-3
 
@@ -281,7 +284,7 @@ subsection Material model
                                                               Crust:2.4e-14|2.4e-14|2.4e-14|2.4e-14|2.4e-14, \
                                                               plastic_strain:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
                                                               weak_seed:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15, \
-                                                              water:7.4e-15|7.4e-15|7.4e-15|7.4e-15|7.4e-15
+                                                              water:2.4e-14|2.4e-14|2.4e-14|2.4e-14|2.4e-14
 
     set Activation energies for dislocation creep       =     background:530e3|530e3|530e3|530e3|530e3, \
                                                               Upper_Mantle:530e3|530e3|530e3|530e3|530e3, \
@@ -298,7 +301,7 @@ subsection Material model
                                                               Crust:480e3|480e3|480e3|480e3|480e3, \
                                                               plastic_strain:530e3|530e3|530e3|530e3|530e3, \
                                                               weak_seed:530e3|530e3|530e3|530e3|530e3, \
-                                                              water:530e3|530e3|530e3|530e3|530e3
+                                                              water:480e3|480e3|480e3|480e3|480e3
 
     set Activation volumes for dislocation creep        =     background:14e-6|14e-6|14e-6|14e-6|14e-6, \
                                                               Upper_Mantle:14e-6|14e-6|14e-6|14e-6|14e-6, \
@@ -315,7 +318,7 @@ subsection Material model
                                                               Crust:11e-6|11e-6|11e-6|11e-6|11e-6, \
                                                               plastic_strain:14e-6|14e-6|14e-6|14e-6|14e-6, \
                                                               weak_seed:14e-6|14e-6|14e-6|14e-6|14e-6, \
-                                                              water:14e-6|14e-6|14e-6|14e-6|14e-6
+                                                              water:11e-6|11e-6|11e-6|11e-6|11e-6
 
 ######### Peierls Creep #########
 # Except for the Upper and Lower Mantle, all compositions will have the Peierls Creep Viscosity Approximation applied to them.
@@ -505,15 +508,14 @@ subsection Initial composition model
 
   set List of model names = world builder, function
   subsection World builder
-    set List of relevant compositions = Upper_Mantle, Lower_Mantle, Base_Continent, East_Prov_PAC, East_Prov_AUS, Batholith_PAC, Batholith_AUS, TVZ, West_Prov_PAC, West_Prov_AUS, Base_Subducting, Crust, plastic_strain
+    set List of relevant compositions = Upper_Mantle, Lower_Mantle, Base_Continent, East_Prov_PAC, East_Prov_AUS, Batholith_PAC, Batholith_AUS, TVZ, West_Prov_PAC, West_Prov_AUS, Base_Subducting, Crust, plastic_strain, water
   end
 
   subsection Function
     set Coordinate system   = spherical
     set Variable names      = r,phi,theta
     set Function constants  = deg2rad=0.0174532925199432951
-    set Function expression = 0;0;0;0;0;0;0;0;0;0;0;0;0;if(r>=6271e3 & phi>=209.68*deg2rad, 1, 0);1000
-    # set Function expression = 0;0;0;0;0;0;0;0;0;0;0;0;0;if(r>=6271e3 & phi>=219.68*deg2rad, 1, 0);0
+    set Function expression = 0;0;0;0;0;0;0;0;0;0;0;0;0;if(r>=6271e3 & phi>=209.68*deg2rad, 1, 0);0
   end
 end
 
