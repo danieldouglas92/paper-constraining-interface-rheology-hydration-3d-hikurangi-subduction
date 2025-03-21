@@ -116,7 +116,6 @@ def vertical_surface_water_flux(parallel_slab_surface_profiles, parallel_slab_su
     """
     
     surface_slab_water_flux = np.zeros(len(parallel_slab_surface_profiles[0]), dtype=object)
-    # slab_top_dx = abs(parallel_slab_surface_profiles[0][0] - parallel_slab_surface_profiles[0][1])    
     for j in range(len(surface_slab_water_flux)):
         depth_water_profile = np.zeros(len(parallel_slab_surface_profiles))
 
@@ -129,12 +128,16 @@ def vertical_surface_water_flux(parallel_slab_surface_profiles, parallel_slab_su
                 depth_water_profile[i] = 0
 
             else:
-                depth_water_profile[i] = dehydration_amount[i][subsurface_vertical_index]
+                if hasattr(dehydration_amount[i], "__len__"):
+                    depth_water_profile[i] = dehydration_amount[i][subsurface_vertical_index]
+
+                else:
+                    depth_water_profile[i] = dehydration_amount[i]
                 
                 if i == 1:
                     dxdz = np.abs(parallel_slab_surface_depths[0][j] - parallel_slab_surface_depths[i][subsurface_vertical_index])
 
-        surface_slab_water_flux[j] = np.trapz(depth_water_profile, dx=dxdz)
+        surface_slab_water_flux[j] = np.trapz(depth_water_profile, dx=dxdz*1e3)
 
     return surface_slab_water_flux
 
